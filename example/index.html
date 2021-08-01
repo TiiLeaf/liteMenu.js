@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>liteMenu.js Example</title>
+
+    <!-- Adding these two lines to <head> is all you need to do to use liteMenu.js -->
+    <script type="text/javascript" src="../build/liteMenu.min.js"></script>
+    <link rel="stylesheet" href="../build/liteMenu.min.css"/>
+  </head>
+  <body>
+    <div id="output" style="font-family: monospace; margin-left: 300px; margin-top: 10px; width: 300px;">
+      <button onclick="menu.styling({'theme': 'card-light'})">Light Theme</button>
+      <button onclick="menu.styling({'theme': 'card-dark'})">Dark Theme</button>
+      <button onclick="menu.styling({'theme': 'default'})">Remove Theme</button><br><br>
+      <button onclick="menu.show()">Show</button>
+      <button onclick="menu.hide()">Hide</button><br><br>
+      <button onclick="menu.addButton('New Button', myFunction)">Add Element</button>
+      <button onclick="menu.removeItem(0)">Remove Element</button><hr>
+      Event List:<br>
+    </div>
+    <!-- This example does not show everything the library can do. Please read the documentation! -->
+    <script type="text/javascript">
+      var myFunction = (e) => {
+        if (e.target.type)
+          output.innerHTML += e.target.type + " changed! [" + e.target.value + "] <br/>";
+        else
+          output.innerHTML += "button pressed! <br/>";
+      }
+
+      var menu = new MainMenu(); //create the menu
+      var folder = new SubMenu(menu); //create a submenu
+      menu.styling({ //style the menu by applying a default theme
+        theme: 'card-dark'
+        //even if a theme is applied you can customize the menu further by providing more rules to the styling function
+      });
+
+
+      //add content to the menu
+      menu.addHeader("Example Menu", "This menu is an example.");
+      menu.addLabel("I'm uninteractable text!");
+      menu.addSeparator("Controls");
+      menu.addButton("Button", myFunction);
+      menu.addSlider("Slider:", 0, 100, 1, 50, myFunction);
+      menu.addInput("Text Field:", myFunction);
+      menu.addDropdown("Dropdown:", ["Option A", "Option B", "Option C"], myFunction);
+      menu.addSeparator();
+      menu.addLink("More Examples", folder);
+
+      //add content to the submenu
+      folder.copyHeader();
+      folder.addLabel("This submenu contains inputs with their width altered and a slider set to include its value in its text.");
+      folder.addSeparator();
+      folder.addSlider("Big Slider:", 0, 100, 1, 50, myFunction, true);
+      folder.setInputWidth("100%", true);
+      folder.addInput("Big Text Feild:", myFunction);
+      folder.setInputWidth("100%", true);
+      folder.addDropdown("Tiny Dropdown:", ["1", "2", "3", "4"], myFunction);
+      folder.setInputWidth("15%");
+      folder.addSeparator();
+      folder.addLink("Back", menu);
+    </script>
+  </body>
+</html>
