@@ -1,8 +1,8 @@
 # liteMenu.js
-liteMenu.js is a lightweight JavaScript library for creating GUI controllers to easily add interaction to your JavaScript program.
+liteMenu.js is a lightweight JavaScript library for creating GUI controllers to easily add interaction to your JavaScript project.
 
 ## Description
-liteMenu.js is a lightweight JavaScript library for creating GUI controllers to easily add interaction to your JavaScript program. It prioritizes being simple to use and quick to implement into any project whenever the need for GUI or user interaction comes up. It's menus are highly customizable, support infinitely nested submenus / folders, and the inputs controls on each menu are easy to hook into the rest of your JavaScript code.
+liteMenu.js is a lightweight JavaScript library for creating GUI controllers to easily add interaction to your JavaScript project. It prioritizes being simple to use and quick to implement into any project whenever the need for GUI or user interaction comes up. It's menus are highly customizable, support infinitely nested submenus / folders, and the inputs controls on each menu are easy to hook into the rest of your JavaScript code.
 
 ## Getting Started
 

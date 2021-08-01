@@ -1,6 +1,5 @@
-
 # liteMenu.js Tutorial
-liteMenu.js is a lightweight JavaScript library for creating GUI controllers to easily add interaction to your JavaScript program.
+liteMenu.js is a lightweight JavaScript library for creating GUI controllers to easily add interaction to your JavaScript project.
 This tutorial was written in GitHub markdown, not all markdown renderers support the same features as GitHub's. If you are having trouble viewing this tutorial's formatting view online at: https://github.com/TiiLeaf/liteMenu.js/docs/tutorial.md
 ## Table of contents
  - [Installing](#installing)
