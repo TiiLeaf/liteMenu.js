@@ -5,8 +5,8 @@ class Menu {
   }
 
   initRoot() {
-    let elt = createElement('div', 'menu');
-    elt.append(createElement('ul', 'menuList'));
+    let elt = createElt('div', 'menu');
+    elt.append(createElt('ul', 'menuList'));
     return elt;
   }
 
@@ -39,12 +39,12 @@ class Menu {
   }
 
   addHeader(title, subtitle) {
-    let elt = createElement('div', 'menuHeader');
-    let h1 = createElement('h1', 'menuTitle', title);
+    let elt = createElt('div', 'menuHeader');
+    let h1 = createElt('h1', 'menuTitle', title);
     elt.append(h1);
 
     if (subtitle) {
-      let h2 = createElement('h2', 'menuSubtitle', subtitle);
+      let h2 = createElt('h2', 'menuSubtitle', subtitle);
       elt.append(h2);
     }
 
@@ -52,32 +52,32 @@ class Menu {
   }
 
   addSeparator(text) {
-    let elt = createElement('li', ['menuItem', 'menuSeparator'], text);
+    let elt = createElt('li', ['menuItem', 'menuSeparator'], text);
     if (!text) {
       elt.innerHTML += "<br>";
       elt.style.padding = "0px";
     }
 
-    elt.appendChild(createElement('div', 'menuSeparatorLine'));
+    elt.appendChild(createElt('div', 'menuSeparatorLine'));
     this.listElt.append(elt);
   }
 
   addButton(text, func) {
-    let elt = createElement('li', ['menuItem', 'menuButton'], text);
+    let elt = createElt('li', ['menuItem', 'menuButton'], text);
     elt.onclick = func;
     this.listElt.append(elt);
   }
 
   addLabel(text) {
-    let elt = createElement('li', ['menuItem', 'menuLabel'], text);
+    let elt = createElt('li', ['menuItem', 'menuLabel'], text);
     this.listElt.append(elt);
   }
 
   addDropdown(text, options, func) {
-    let elt = createElement('li', ['menuItem', 'menuDropdownContainer'], text);
-    let select = createElement('select', 'menuDropdown');
+    let elt = createElt('li', ['menuItem', 'menuDropdownContainer'], text);
+    let select = createElt('select', 'menuDropdown');
     for (let i = 0; i < options.length; i++) {
-      select.append(createElement('option', 'menuDropdownOption', options[i]));
+      select.append(createElt('option', 'menuDropdownOption', options[i]));
     }
 
     select.onchange = func;
@@ -87,8 +87,8 @@ class Menu {
   }
 
   addSlider(text, min, max, step, value, func, readout = false) {
-    let elt = createElement('li', ['menuItem', 'menuSliderContainer'], text);
-    let slider = createElement('input', 'menuSlider');
+    let elt = createElt('li', ['menuItem', 'menuSliderContainer'], text);
+    let slider = createElt('input', 'menuSlider');
     slider.setAttribute('type', 'range');
     slider.setAttribute('min', min);
     slider.setAttribute('max', max);
@@ -106,8 +106,8 @@ class Menu {
   }
 
   addInput(text, func) {
-    let elt = createElement('li', ['menuItem', 'menuInputContainer'], text);
-    let input = createElement('input', 'menuInput');
+    let elt = createElt('li', ['menuItem', 'menuInputContainer'], text);
+    let input = createElt('input', 'menuInput');
     input.placeholder = "Type Here...";
     input.onchange = func;
 
@@ -254,7 +254,7 @@ class MainMenu extends Menu {
   }
 
   addLink(text, submenu) {
-    let elt = createElement('li', ['menuItem', 'menuButton'], text);
+    let elt = createElt('li', ['menuItem', 'menuButton'], text);
     elt.onclick = () => {this.openSubmenu(submenu)};
     this.listElt.append(elt);
 
@@ -282,7 +282,7 @@ class SubMenu extends Menu {
   }
 
   addLink(text, submenu) {
-    let elt = createElement('li', ['menuItem', 'menuButton'], text);
+    let elt = createElt('li', ['menuItem', 'menuButton'], text);
     elt.onclick = () => {this.openSubmenu(submenu)};
     this.listElt.append(elt);
 
@@ -296,13 +296,12 @@ class SubMenu extends Menu {
   }
 }
 
-
 function updateReadout(e, text, func) {
   e.target.parentNode.firstChild.innerHTML = text + " (" + e.target.value + ")";
   func(e);
 }
 
-function createElement(type, classes = null, text = null) {
+function createElt(type, classes = null, text = null) {
   let elt = document.createElement(type);
 
   if (classes && typeof classes == 'object') {
