@@ -20,7 +20,7 @@ class Menu {
   }
 
   setIndex(index) {
-    var elt = this.listElt.lastChild;
+    let elt = this.listElt.lastChild;
     this.listElt.insertBefore(elt, this.listElt.childNodes[index]);
   }
 
@@ -33,9 +33,46 @@ class Menu {
     }
   }
 
-  openSubmenu(submenu) {
-    this.rootElt.style.display = 'none';
-    submenu.rootElt.style.display = 'block';
+  getInputValues() {
+    let values = [];
+    for (let i = 0; i < this.listElt.childNodes.length; i++) {
+      if (this.listElt.childNodes[i].classList[1].includes("Container")) {
+        values.push(this.listElt.childNodes[i].childNodes[1].value);
+      }
+    }
+    return values;
+  }
+
+  setInputValues(values) {
+    let j = 0;
+    for (let i = 0; i < this.listElt.childNodes.length; i++) {
+      if (this.listElt.childNodes[i].classList[1].includes("Container")) {
+        this.listElt.childNodes[i].childNodes[1].value = values[j];
+        j += 1;
+      }
+    }
+  }
+
+  getInputValue(index) {
+    let j = 0;
+    for (let i = 0; i < this.listElt.childNodes.length; i++) {
+      if (this.listElt.childNodes[i].classList[1].includes("Container")) {
+        if (j == index)
+          return this.listElt.childNodes[i].childNodes[1].value;
+        j += 1;
+      }
+    }
+  }
+
+  setInputValue(index, value) {
+    let j = 0;
+    for (let i = 0; i < this.listElt.childNodes.length; i++) {
+      if (this.listElt.childNodes[i].classList[1].includes("Container")) {
+        if (j == index)
+          this.listElt.childNodes[i].childNodes[1].value = value;
+        j += 1;
+      }
+    }
   }
 
   addHeader(title, subtitle) {
@@ -114,12 +151,29 @@ class Menu {
     elt.append(input);
     this.listElt.append(elt);
   }
+
+  addColorPicker(text, value, func) {
+    let elt = createElt('li', ['menuItem', 'menuColorPickerContainer'], text);
+    let picker = createElt('input', 'menuColorPicker');
+    picker.setAttribute('type', 'color');
+    picker.setAttribute('value', value);
+    picker.onchange = func;
+
+    elt.append(picker);
+    this.listElt.append(elt);
+  }
+
+  addLink(text, submenu) {
+    let elt = createElt('li', ['menuItem', 'menuButton'], text);
+    elt.append(createElt('div', 'menuLinkDecor', "&#10095;"));
+    elt.onclick = () => {this.openSubmenu(submenu)};
+    this.listElt.append(elt);
+  }
 }
 
 class MainMenu extends Menu {
   constructor(options) {
     super();
-    this.submenus = [];
   }
 
   styling(styleOptions) {
@@ -149,7 +203,7 @@ class MainMenu extends Menu {
             'font-size': '16px',
             'header-align': 'left',
             'separator-align': 'right',
-
+            'link-decoration': 'visible',
             'border': 'none',
             'border-radius': '8px',
             'shadow': '4px 4px 5px #666'
@@ -177,6 +231,7 @@ class MainMenu extends Menu {
               'font-size': '1em',
               'header-align': 'left',
               'separator-align': 'right',
+              'link-decoration': 'visible',
 
               'border': 'none',
               'border-radius': '8px',
@@ -204,6 +259,7 @@ class MainMenu extends Menu {
             'font-size': '1em',
             'header-align': 'center',
             'separator-align': 'center',
+            'link-decoration': 'visible',
 
             'border': 'none',
             'border-radius': '0px',
@@ -253,19 +309,10 @@ class MainMenu extends Menu {
     submenu.rootElt.style.display = 'block';
   }
 
-  addLink(text, submenu) {
-    let elt = createElt('li', ['menuItem', 'menuButton'], text);
-    elt.onclick = () => {this.openSubmenu(submenu)};
-    this.listElt.append(elt);
-
-    if (!this.submenus.includes(submenu))
-      this.submenus.push(submenu);
-  }
-
   hide() {
-    this.rootElt.style.display = 'none';
-    for (let i = 0; i < this.submenus.length; i++) {
-      this.submenus[i].rootElt.style.display = 'none';
+    let menus = document.getElementsByClassName('menu');
+    for (let i = 0; i < menus.length; i++) {
+      menus[i].style.display = "none";
     }
   }
 
@@ -281,24 +328,21 @@ class SubMenu extends Menu {
     this.mainMenu = mainMenu;
   }
 
-  addLink(text, submenu) {
-    let elt = createElt('li', ['menuItem', 'menuButton'], text);
-    elt.onclick = () => {this.openSubmenu(submenu)};
-    this.listElt.append(elt);
-
-    if (!this.mainMenu.submenus.includes(submenu))
-      this.mainMenu.submenus.push(submenu);
-  }
-
   copyHeader() {
     let elt = this.mainMenu.rootElt.firstChild.cloneNode(true);
     this.rootElt.prepend(elt);
+  }
+
+  openSubmenu(submenu) {
+    this.mainMenu.hide();
+    submenu.rootElt.style.display = 'block';
   }
 }
 
 function updateReadout(e, text, func) {
   e.target.parentNode.firstChild.innerHTML = text + " (" + e.target.value + ")";
-  func(e);
+  if (func)
+    func(e);
 }
 
 function createElt(type, classes = null, text = null) {

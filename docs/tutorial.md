@@ -98,6 +98,19 @@ var dropdownChanged = function(e) {
 }
 menu.addSlider('Favorite Letter', ['A', 'B', 'C'], dropdownChanged);
 ```
+### Color Pickers
+To add a color picker call `Menu.addColorPicker(text);` The method's parameter requirements are shown below:
+| text (String)              | value (String)             | onchange (Function)                            |
+| :------------------------- | :------------------------- | :--------------------------------------------- |
+| label for the color picker | 6 digit hex starting color | function to execute whenever a color is picked |
+
+The following code will add a color picker labeled `My Color Picker`, make it red, and define the function `colorChanged` that will be executed each time a color is picked.
+```javascript
+var colorChanged = function(e) {
+	console.log('The color was changed to: ' + e.target.value);
+}
+menu.addColorPicker('My Color Picker:', '#FF0000', colorChanged);
+```
 ### Separators
 To add a separator call `Menu.addSeparator(text);` The method's parameter requirements are shown below:
 | text (String) (Optional)    |
@@ -126,6 +139,10 @@ menu.addInput('Text Feild', textChanged);
 ```javascript
 menu.addInput('Text Feild', console.log('Text changed'));
 ```
+### Getting input values without event functions
+liteMenu.js contains a small set of functions to get the value of any inputs without having to react to a DOM event. The functions `Menu.getInputValues()` and `Menu.getInputValue(index)` can be used to get the current values of inputs on a menu or submenu. The first returns an array of every input value in top down order and the second returns a specific value determined by the value of the parameter. i.e. `Menu.getInputValue(0)` will get the value of the first input (in top-down order) and `Menu.getInputValue(1)` will get the second.
+### Setting values through code
+If you want to change the value of an input on a menu but don't want the user to do it manually through the GUI, you can use the functions `Menu.setInputValues(values)` and `menu.setInputValue(index, value)`. The first function expects an array of values to map to the inputs on the menu in top down order. The second expects an index and a value to be specified, and will only set the value of the one input specified by the `index` parameter. (0 is the top-most input, 1 is the second-from-top, etc.)
 ### Changing input width
 Often you may want to change the default width of an input. For example, increasing the width of a text input field to provide more room to type or decreasing the width of a dropdown list to better suit short option names. To change the width of an input, call the `Menu.setInputWidth(width, newLine);` directly after adding the input to the menu. The parameter requirements of this function are shown below:
 | width (String)| newLine (Boolean) (Optional)                                  |
@@ -209,6 +226,7 @@ One goal of liteMenu.js is to be easily and highly customizable. liteMenu.js all
 | font-size       | font size                                    | 16px                      | any CSS length                                         |
 | header-align    | text alignment of title and subtitle         | center                    | left, right, center                                    |
 | separator-align | text alignment of separators                 | right                     | left, right, center                                    |
+| link-decoration | visibility of decorative arrows by links     | visible                   | visible, hidden                                        |
 | border          | border of the main body of the menu          | none                      | any CSS border rule                                    |
 | border-radius   | how much the menu corners should be rounded  | 8px                       | any CSS length                                         |
 | shadow          | shadow of the main body of the menu          | none                      | any CSS box-shadow rule                                |

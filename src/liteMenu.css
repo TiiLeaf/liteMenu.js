@@ -23,6 +23,7 @@
   --m-font-size: 16px;
   --m-header-align: center;
   --m-separator-align: center;
+  --m-link-decoration: visible;
 
   --m-border: none;
   --m-border-radius: 0px;
@@ -82,7 +83,7 @@
   font-size: var(--m-font-size);
 }
 
-.menuInput {
+.menuInput, .menuDropdown, .menuColorPicker {
   height: var(--m-input-size);
   padding: 0px;
   margin: 0px;
@@ -91,13 +92,12 @@
   width: 50%;
 }
 
-.menuDropdown {
-  height: var(--m-input-size);
-  padding: 0px;
-  margin: 0px;
-  float: right;
-  border: none;
-  width: 50%;
+.menuColorPicker {
+  border: 2px solid white;
+}
+
+.menuColorPicker:hover {
+  cursor: pointer;
 }
 
 .menuSeparator {
@@ -124,6 +124,12 @@
 .menuButton:hover {
   cursor: pointer;
   background: var(--m-highlight-color);
+}
+
+.menuLinkDecor {
+  float: right;
+  margin-top: -1px;
+  visibility: var(--m-link-decoration);
 }
 
 input[type=range].menuSlider {
